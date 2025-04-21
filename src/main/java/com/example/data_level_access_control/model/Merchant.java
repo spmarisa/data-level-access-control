@@ -1,16 +1,32 @@
 package com.example.data_level_access_control.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonIgnoreProperties
 public class Merchant {
-  private String id;
+  @Id
+  @GeneratedValue
+  private Long id;
   private String name;
   private String paymentCurrency;
   private String processingCurrency;
-  private List<Contact> contacts;
+  @OneToMany(mappedBy = "merchant", cascade = CascadeType.ALL)
+  private List<Contact> contacts = new ArrayList<>();
 }
